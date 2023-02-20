@@ -206,7 +206,9 @@
   .description {
     font-size: 0.8rem;
   }
-
+  .title {
+    font-size: 2rem;
+  }
   .description a {
     padding: 1rem;
   }
@@ -275,4 +277,8 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+.button {
+  background-color: purple;
 }
