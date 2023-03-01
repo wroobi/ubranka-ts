@@ -1,19 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { useState } from "react";
 import { getImage } from "@/components/utils";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   const [chosen, setChosen] = useState(0);
+
   const handleClick = () => {
     const val = Math.ceil(Math.random() * 4);
-    console.log("val", val);
     setChosen(val);
   };
+
   return (
     <>
       <Head>
@@ -29,17 +27,15 @@ export default function Home() {
           </div>
         </div>
 
-        <button className={styles.title} onClick={handleClick}>
+        <button className={styles.button} onClick={handleClick}>
           Losowanie
         </button>
 
-        {chosen ? (
-          <div>
+        <div>
+          {chosen > 0 && (
             <Image src={getImage(chosen)} alt="me" width="128" height="128" />
-          </div>
-        ) : (
-          <></>
-        )}
+          )}
+        </div>
       </main>
     </>
   );
