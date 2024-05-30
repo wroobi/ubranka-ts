@@ -1,7 +1,8 @@
 "use client";
+
 import Image from "next/image";
 import { useState } from "react";
-import styles from "./Select.module.css";
+import styles from "./select.module.css";
 
 export default function Select() {
   const [selected, setSelected] = useState(0);

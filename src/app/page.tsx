@@ -1,5 +1,5 @@
-import Select from "./Select";
 import styles from "./page.module.css";
+import Select from "./ui/select";
 
 export default async function Home() {
   return (
