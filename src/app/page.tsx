@@ -1,14 +1,23 @@
+"use client";
+import { useState } from "react";
 import styles from "./page.module.css";
 import Select from "./ui/select";
+import { Tabs, getCurrentSeason } from "./ui/tabs";
 
-export default async function Home() {
+export default function Home() {
+  const [selectedSeason, setSelectedSeason] = useState(getCurrentSeason());
+
   return (
     <main className={styles.main}>
+      <Tabs
+        setSelectedSeason={setSelectedSeason}
+        selectedSeason={selectedSeason}
+      />
       <div className={styles.center}>
         <h1 className={styles.title}>Cześć Tosia!</h1>
       </div>
 
-      <Select />
+      <Select selectedSeason={selectedSeason} />
     </main>
   );
 }

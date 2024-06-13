@@ -1,0 +1,32 @@
+.button {
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 30%;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  z-index: 1;
+}
+
+.tab {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+
+.tab:hover {
+  background-color: #dcdcdc;
+}
+
+.tab.active {
+  background-color: green;
+  color: #ffffff;
+}
