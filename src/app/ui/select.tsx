@@ -27,30 +27,33 @@ export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   );
 }
 
-const getImage = (number: number, selectedSeason?: Season) => {
-  if (selectedSeason === "Lato") {
-    switch (number) {
-      case 1:
-        return "/spodenki.jpg";
-      case 2:
-        return "/spodnica.jpg";
-      case 3:
-        return "/sukienka.jpg";
-      default:
-        return "/legginsy.jpg";
-    }
-  }
-  switch (number) {
-    case 1:
-      return "/dres.jpg";
+const getImage = (number: number, selectedSeason: Season) => {
+  const images: Record<Season, Record<string, string>> = {
+    Wiosna: {
+      1: "/spodenki.jpg",
+      2: "/spodnica.jpg",
+      3: "/sukienka.jpg",
+      4: "/legginsy.jpg",
+    },
+    Lato: {
+      1: "/spodenki.jpg",
+      2: "/spodnica.jpg",
+      3: "/sukienka.jpg",
+      4: "/legginsy.jpg",
+    },
+    Jesień: {
+      1: "/dres.jpg",
+      2: "/spodnica.jpg",
+      3: "/sukienka.jpg",
+      4: "/legginsy.jpg",
+    },
+    Zima: {
+      1: "/dres.jpg",
+      2: "/spodnica.jpg",
+      3: "/spodnie.png",
+      4: "/sukienka.jpg",
+    },
+  };
 
-    case 2:
-      return "/spodnica.jpg";
-
-    case 3:
-      return "/spodnie.png";
-
-    default:
-      return "/sukienka.jpg";
-  }
+  return images[selectedSeason][number.toString()] || "/dres.jpg";
 };

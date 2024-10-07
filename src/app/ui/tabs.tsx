@@ -2,18 +2,16 @@
 import React from "react";
 import styles from "./tabs.module.css";
 
-export type Season = "Zima" | "Lato";
+export type Season = "Zima" | "Lato" | "Wiosna" | "Jesień";
 
 export const getCurrentSeason = (): Season => {
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11, so we add 1 to get the actual month number
+  const currentMonth = currentDate.getMonth() + 1;
 
-  let initialSeason: Season = "Zima";
-  if (currentMonth >= 4 && currentMonth <= 9) {
-    initialSeason = "Lato";
-  }
-
-  return initialSeason;
+  if (currentMonth >= 3 && currentMonth <= 5) return "Wiosna";
+  if (currentMonth >= 6 && currentMonth <= 8) return "Lato";
+  if (currentMonth >= 9 && currentMonth <= 11) return "Jesień";
+  return "Zima";
 };
 
 export const Tabs = ({
@@ -29,22 +27,17 @@ export const Tabs = ({
 
   return (
     <div className={styles.tabs}>
-      <button
-        className={`${styles.tab} ${
-          selectedSeason === "Zima" ? styles.active : ""
-        }`}
-        onClick={() => handleSeasonChange("Zima")}
-      >
-        Zima
-      </button>
-      <button
-        className={`${styles.tab} ${
-          selectedSeason === "Lato" ? styles.active : ""
-        }`}
-        onClick={() => handleSeasonChange("Lato")}
-      >
-        Lato
-      </button>
+      {["Zima", "Wiosna", "Lato", "Jesień"].map((season) => (
+        <button
+          key={season}
+          className={`${styles.tab} ${
+            selectedSeason === season ? styles.active : ""
+          }`}
+          onClick={() => handleSeasonChange(season as Season)}
+        >
+          {season}
+        </button>
+      ))}
     </div>
   );
 };
