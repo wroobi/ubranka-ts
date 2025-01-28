@@ -4,16 +4,28 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "./select.module.css";
 import { Season } from "./tabs";
+import LoadingOverlay from "./loading-overlay";
 
 export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   const [selected, setSelected] = useState(0);
-  const handleClick = () => {
-    const val = Math.ceil(Math.random() * 4);
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    let val;
+    const randomDelay = Math.floor(Math.random() * (2000 - 500 + 1) + 500);
+    await new Promise((resolve) => setTimeout(resolve, randomDelay));
+    do {
+      val = Math.ceil(Math.random() * 4);
+    } while (val === selected);
     setSelected(val);
+    setLoading(false);
   };
 
   return (
     <div className={styles.select}>
+      {loading && <LoadingOverlay />}
+
       <Image
         src={getImage(selected, selectedSeason)}
         alt="zdjecie ubranka"
