@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import Select from "./ui/select";
 import { Tabs, getCurrentSeason } from "./ui/tabs";
 
-export default function Home() {
+export default function Page() {
   const [selectedSeason, setSelectedSeason] = useState(getCurrentSeason());
 
   return (
