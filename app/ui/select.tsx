@@ -25,22 +25,20 @@ export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   return (
     <div className={styles.select}>
       <div className={styles.imageContainer}>
-        {loading ? (
-          <div
-            className={`${styles.skeletonWrapper} ${
-              !loading ? styles.hidden : ""
-            }`}
-          >
-            <ImageSkeleton />
-          </div>
-        ) : (
-          <Image
-            src={getImage(selected, selectedSeason)}
-            alt="zdjecie ubranka"
-            width={300}
-            height={300}
-          />
-        )}
+        <div
+          className={`${styles.skeletonWrapper} ${
+            !loading ? styles.hidden : ""
+          }`}
+        >
+          <ImageSkeleton />
+        </div>
+        <Image
+          src={getImage(selected, selectedSeason)}
+          alt="zdjecie ubranka"
+          width={300}
+          height={300}
+          className={`${styles.image} ${loading ? styles.hidden : ""}`}
+        />
       </div>
       <button
         className={styles.button}
