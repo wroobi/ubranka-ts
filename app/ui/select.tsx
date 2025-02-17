@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "./select.module.css";
 import { Season } from "./tabs";
-import LoadingOverlay from "./loading-overlay";
+import ImageSkeleton from "./skeleton";
 
 export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   const [selected, setSelected] = useState(0);
@@ -24,16 +24,30 @@ export default function Select({ selectedSeason }: { selectedSeason: Season }) {
 
   return (
     <div className={styles.select}>
-      {loading && <LoadingOverlay />}
-
-      <Image
-        src={getImage(selected, selectedSeason)}
-        alt="zdjecie ubranka"
-        width={300}
-        height={300}
-      />
-      <button className={styles.button} onClick={handleClick}>
-        Losuj
+      <div className={styles.imageContainer}>
+        {loading ? (
+          <div
+            className={`${styles.skeletonWrapper} ${
+              !loading ? styles.hidden : ""
+            }`}
+          >
+            <ImageSkeleton />
+          </div>
+        ) : (
+          <Image
+            src={getImage(selected, selectedSeason)}
+            alt="zdjecie ubranka"
+            width={300}
+            height={300}
+          />
+        )}
+      </div>
+      <button
+        className={styles.button}
+        onClick={handleClick}
+        disabled={loading}
+      >
+        {loading ? "Losowanie..." : "Losuj"}
       </button>
     </div>
   );
