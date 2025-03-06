@@ -13,8 +13,7 @@ export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   const handleClick = async () => {
     setLoading(true);
     let val;
-    const randomDelay = Math.floor(Math.random() * (2000 - 500 + 1) + 500);
-    await new Promise((resolve) => setTimeout(resolve, randomDelay));
+
     do {
       val = Math.ceil(Math.random() * 4);
     } while (val === selected);

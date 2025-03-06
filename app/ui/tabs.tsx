@@ -6,7 +6,7 @@ export type Season = "Zima" | "Lato" | "Wiosna" | "Jesień";
 
 export const getCurrentSeason = (): Season => {
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
+  const currentMonth = currentDate.getMonth();
 
   if (currentMonth >= 3 && currentMonth <= 5) return "Wiosna";
   if (currentMonth >= 6 && currentMonth <= 8) return "Lato";
