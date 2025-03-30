@@ -1,13 +1,8 @@
-import { LoginForm } from "@/app/ui/login-form";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Log In | My App",
-  description: "Log in to your account",
-};
+import LoginForm from "@/app/ui/auth/LoginForm";
 
 export default async function LoginPage() {
   // Check if user is already logged in
@@ -15,9 +10,10 @@ export default async function LoginPage() {
   if (session) {
     redirect("/");
   }
+
   return (
-    <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md">
         <LoginForm />
       </div>
     </div>

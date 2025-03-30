@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import RegisterForm from "@/app/ui/auth/RegisterForm";
+import RegisterForm from "@/app/ui/register-form";
 
 export const metadata: Metadata = {
   title: "Sign Up | My App",
@@ -17,8 +17,8 @@ export default async function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md">
+    <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <div className="w-full max-w-sm">
         <RegisterForm />
       </div>
     </div>
