@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from "./select.module.css";
 import { Season } from "./tabs";
 import ImageSkeleton from "./skeleton";
+import { Button } from "@/app/components/button";
 
 export default function Select({ selectedSeason }: { selectedSeason: Season }) {
   const [selected, setSelected] = useState(0);
@@ -39,38 +40,39 @@ export default function Select({ selectedSeason }: { selectedSeason: Season }) {
           className={`${styles.image} ${loading ? styles.hidden : ""}`}
         />
       </div>
-      <button
-        className={styles.button}
+      <Button
         onClick={handleClick}
         disabled={loading}
+        variant="outline"
+        size="lg"
       >
         {loading ? "Losowanie..." : "Losuj"}
-      </button>
+      </Button>
     </div>
   );
 }
 
 const getImage = (number: number, selectedSeason: Season) => {
   const images: Record<Season, Record<string, string>> = {
-    Wiosna: {
+    wiosna: {
       1: "/spodenki.jpg",
       2: "/spodnica.jpg",
       3: "/sukienka.jpg",
       4: "/legginsy.jpg",
     },
-    Lato: {
+    lato: {
       1: "/spodenki.jpg",
       2: "/spodnica.jpg",
       3: "/sukienka.jpg",
       4: "/legginsy.jpg",
     },
-    Jesień: {
+    jesień: {
       1: "/dres.jpg",
       2: "/spodnica.jpg",
       3: "/sukienka.jpg",
       4: "/legginsy.jpg",
     },
-    Zima: {
+    zima: {
       1: "/dres.jpg",
       2: "/spodnica.jpg",
       3: "/spodnie.png",

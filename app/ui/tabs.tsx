@@ -1,17 +1,18 @@
 "use client";
 import React from "react";
 import styles from "./tabs.module.css";
+import { Button } from "@/app/components/button";
 
-export type Season = "Zima" | "Lato" | "Wiosna" | "Jesień";
+export type Season = "zima" | "wiosna" | "lato" | "jesień";
 
 export const getCurrentSeason = (): Season => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
 
-  if (currentMonth >= 3 && currentMonth <= 5) return "Wiosna";
-  if (currentMonth >= 6 && currentMonth <= 8) return "Lato";
-  if (currentMonth >= 9 && currentMonth <= 11) return "Jesień";
-  return "Zima";
+  if (currentMonth >= 3 && currentMonth <= 5) return "wiosna";
+  if (currentMonth >= 6 && currentMonth <= 8) return "lato";
+  if (currentMonth >= 9 && currentMonth <= 11) return "jesień";
+  return "zima";
 };
 
 export const Tabs = ({
@@ -27,8 +28,8 @@ export const Tabs = ({
 
   return (
     <div className={styles.tabs}>
-      {["Zima", "Wiosna", "Lato", "Jesień"].map((season) => (
-        <button
+      {["zima", "wiosna", "lato", "jesień"].map((season) => (
+        <Button
           key={season}
           className={`${styles.tab} ${
             selectedSeason === season ? styles.active : ""
@@ -36,7 +37,7 @@ export const Tabs = ({
           onClick={() => handleSeasonChange(season as Season)}
         >
           {season}
-        </button>
+        </Button>
       ))}
     </div>
   );

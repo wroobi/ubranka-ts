@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400;700&display=swap");
+
 .button {
   margin: 2rem;
   padding: 1rem;
@@ -10,23 +12,31 @@
   align-items: center;
   margin-top: 2rem;
   z-index: 1;
+  gap: 1.2rem;
 }
 
 .tab {
-  margin: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-
-  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 200ms;
+  transition: all 200ms;
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  min-width: 120px;
+  text-align: center;
 }
 
 .tab:hover {
-  background-color: #dcdcdc;
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  transform: scale(1.05);
 }
 
 .tab.active {
-  background-color: green;
-  color: #ffffff;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+  transform: scale(1.1);
 }
