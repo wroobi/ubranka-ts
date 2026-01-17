@@ -12,17 +12,17 @@ import {
 import { Input } from "@/app/components/input";
 import { Label } from "@/app/components/label";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { set } from "mongoose";
 
-export function LoginForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -31,23 +31,37 @@ export function LoginForm({
     e.preventDefault();
     setIsLoading(true);
     setError("");
+    setSuccess(false);
+
     try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
+      // TODO: Implement actual password reset logic here
+      // This is a placeholder for the actual API call
+      const res = await fetch("/api/auth/request-reset", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
       });
 
-      if (result?.error) {
-        setError("Invalid email or password");
-        setIsLoading(false);
-        return;
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
       }
 
-      // Redirect to dashboard on successful login
-      router.push("/");
+      setSuccess(true);
+
+      if (res.ok) {
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 3000);
+      }
     } catch (error) {
-      setError("Something went wrong. Please try again.");
+      setError("An error occurred. Please try again later.");
+    } finally {
       setIsLoading(false);
     }
   };
@@ -56,9 +70,10 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Reset Password</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email address and we&apos;ll send you a link to reset
+            your password
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -75,40 +90,24 @@ export function LoginForm({
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/auth/reset-password"
-                    className="text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
               {error && (
                 <div className="text-sm text-destructive text-center">
                   {error}
                 </div>
               )}
+              {success && (
+                <div className="text-sm text-green-600 text-center">
+                  Password reset link has been sent to your email address.
+                </div>
+              )}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                Login
+                {isLoading ? "Sending..." : "Send Reset Link"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/auth/register"
-                className="underline underline-offset-4"
-              >
-                Sign up
+              Remember your password?{" "}
+              <Link href="/auth/login" className="underline underline-offset-4">
+                Log in
               </Link>
             </div>
           </form>
