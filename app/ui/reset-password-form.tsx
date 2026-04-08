@@ -14,7 +14,6 @@ import { Label } from "@/app/components/label";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { set } from "mongoose";
 
 export function ResetPasswordForm({
   className,
@@ -49,17 +48,21 @@ export function ResetPasswordForm({
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Something went wrong");
+        if (res.status === 404) {
+          setError("User with this email not found");
+        } else {
+          throw new Error(data.message || "Something went wrong");
+        }
       }
 
-      setSuccess(true);
-
       if (res.ok) {
+        setSuccess(true);
         setTimeout(() => {
           router.push("/auth/login");
         }, 3000);
       }
     } catch (error) {
+      console.error("Reset password error:", error);
       setError("An error occurred. Please try again later.");
     } finally {
       setIsLoading(false);
