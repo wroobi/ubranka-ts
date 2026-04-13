@@ -7,6 +7,8 @@ export interface IUser extends mongoose.Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  resetPasswordToken?: string | null;
+  resetPasswordExpire?: Date | null;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -35,6 +37,15 @@ const UserSchema = new mongoose.Schema<IUser>(
       minlength: [8, "Password must be at least 8 characters"],
       select: false, // Don't return password in queries by default
     },
+    // Fields for password reset flow
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpire: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -55,9 +66,9 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
+  // @ts-ignore - password may be excluded from queries, ensure it's present
   return bcrypt.compare(candidatePassword, this.password);
 };
 
 // Delete the model before creating it to prevent overwrite warning in development with hot reloading
-export default mongoose.models.User ||
-  mongoose.model<IUser>("User", UserSchema);
+export default mongoose.models.User || mongoose.model<IUser>("User", UserSchema);
