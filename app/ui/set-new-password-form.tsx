@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/app/components/button";
 import { Input } from "@/app/components/input";
 import { Label } from "@/app/components/label";
 
-export function SetNewPasswordForm({ className }: { className?: string }) {
+function _SetNewPasswordForm({ className }: { className?: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams?.get("token") || "";
@@ -87,5 +87,13 @@ export function SetNewPasswordForm({ className }: { className?: string }) {
         {isLoading ? "Saving..." : "Set new password"}
       </Button>
     </form>
+  );
+}
+
+export function SetNewPasswordForm(props: { className?: string }) {
+  return (
+    <Suspense>
+      <_SetNewPasswordForm {...props} />
+    </Suspense>
   );
 }
